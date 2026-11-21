@@ -8,13 +8,13 @@ cask "alt-tab-patched" do
   homepage "https://github.com/viliampucik/homebrew-tap"
 
   conflicts_with cask: "alt-tab"
-  depends_on macos: ">= :monterey"
+  depends_on macos: :monterey
 
   app "AltTab.app"
 
   # Self-signed, not notarized: drop quarantine so Gatekeeper doesn't block launch
-  postflight do
-    system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{appdir}/AltTab.app"]
+  postflight_steps do
+    run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/AltTab.app"], must_succeed: false
   end
 
   uninstall quit: "com.lwouis.alt-tab-macos"
