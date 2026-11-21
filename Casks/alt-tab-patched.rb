@@ -1,0 +1,21 @@
+cask "alt-tab-patched" do
+  version "0"
+  sha256 "0"
+
+  url "https://github.com/viliampucik/homebrew-tap/releases/download/v#{version}/AltTab-#{version}.zip"
+  name "AltTab (patched)"
+  desc "Unofficial patched build of AltTab"
+  homepage "https://github.com/viliampucik/homebrew-tap"
+
+  conflicts_with cask: "alt-tab"
+  depends_on macos: ">= :monterey"
+
+  app "AltTab.app"
+
+  # Self-signed, not notarized: drop quarantine so Gatekeeper doesn't block launch
+  postflight do
+    system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{appdir}/AltTab.app"]
+  end
+
+  uninstall quit: "com.lwouis.alt-tab-macos"
+end

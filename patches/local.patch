@@ -1,0 +1,33 @@
+diff --git a/Info.plist b/Info.plist
+index cdc1d64e..da0aa015 100644
+--- a/Info.plist
++++ b/Info.plist
+@@ -61,7 +61,7 @@
+ 	<key>SUPublicEDKey</key>
+ 	<string>2e9SQOBoaKElchSa/4QDli/nvYkyuDNfynfzBF6vJK4=</string>
+ 	<key>SUEnableAutomaticChecks</key>
+-	<string>true</string>
++	<string>false</string>
+ 	<key>SUScheduledCheckInterval</key>
+ 	<string>604800</string>
+ 
+diff --git a/src/pro/license/LicenseManager.swift b/src/pro/license/LicenseManager.swift
+index 4c5d4b6d..a32e9a41 100644
+--- a/src/pro/license/LicenseManager.swift
++++ b/src/pro/license/LicenseManager.swift
+@@ -25,6 +25,7 @@ class LicenseManager {
+     }()
+ 
+     static let trialDuration = 14
++    private static let localProBuild = true
+     private static let revalidationInterval: TimeInterval = 30 * 24 * 60 * 60 // 30 days
+     static let keychainKeyAccount = "licenseKey"
+     static let keychainInstanceAccount = "instanceId"
+@@ -256,6 +257,7 @@ class LicenseManager {
+         #if DEBUG
+         if hasMockedLicense { return mockedTrialStartDate.map(trialState) ?? state }
+         #endif
++        if Self.localProBuild { return .pro } // local build: Pro always on
+         if keychain.value(account: Self.keychainKeyAccount) != nil {
+             let lastValidationResult = defaults.bool(forKey: "lastValidationResult")
+             guard lastValidationResult else { return .trialExpired }
