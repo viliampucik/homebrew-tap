@@ -1,6 +1,6 @@
 cask "alt-tab-patched" do
-  version "0"
-  sha256 "0"
+  version "11.10.2"
+  sha256 "8825a1782083930c4bac36a0a1338e8c1b9637d0889c40f8c338c8fff813c5c1"
 
   url "https://github.com/viliampucik/homebrew-tap/releases/download/v#{version}/AltTab-#{version}.zip"
   name "AltTab (patched)"
